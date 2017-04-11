@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="node_modules/template.js"></script>
+    <script src="public/index.js"></script>
+    
+</head>
+<body>
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-sm-2">
+                <h1>豆瓣读书</h1>
+            </div>
+            <div class="col-sm-10">
+
+                <form action="" style="margin-top: 20px;">
+                    <div class="row">
+
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="searchKeyWord" placeholder="请输入要搜索的书名">
+                            </div>
+                        </div>
+
+                        <div class="col-sm-2">
+                            <button type="submit" class="btn btn-info" id="searchBtn">
+                                <span class="glyphicon glyphicon-search"> 搜索</span>
+                            </button>
+                        </div>
+
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12 text-right" id="resultHead"></div>
+            <script type="text/html" id="resultHeadTemplate">
+                搜索结果 <strong>{{start+1}}-{{start + books.length}}</strong>，共 <strong>{{total}}</strong>
+            </script>
+        </div>
+
+        <div class="row" id="loading" style="display: none;">
+            <div style="width:100%;height: 400px; background: url('public/loading.gif') no-repeat center;"></div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-12" id="list"></div>
+            <script type="text/html" id="listTemplate">
+                {{each books as book}}
+                    <div class="media">
+                        <a class="media-left" href="#">
+                            <img src="{{book.image}}" alt="{{book.subtitle}}">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">
+                                <a href="">{{book.title}}</a>
+                            </h4>
+                            <dl class="dl-horizontal">
+                                <dt style="text-align: left">作者</dt>
+                                <dd>{{book.author[0]}}</dd>
+                                <dt style="text-align: left">出版社</dt>
+                                <dd>{{book.publisher}}</dd>
+                                <dt style="text-align: left">价格</dt>
+                                <dd>{{book.price}}</dd>
+                            </dl>
+                            <p>{{book.summary.substring(0, 200)}}...</p>
+                        </div>
+                    </div>
+                {{/each}}
+            </script>
+
+        </div>
+
+        <nav id="pagination">
+
+        </nav>
+        <script type="text/html" id="pagiationTemplate">
+            <ul class="pagination">
+                <li><a href="#">&laquo;</a></li>
+
+                {{each pages as value index}}
+                    {{if page == index+1}}
+                        <li _page="{{index+1}}" class="active"><a href="javascript:;">{{index+1}}</a></li>
+                    {{else}}
+                        <li _page="{{index+1}}"><a href="javascript:;">{{index+1}}</a></li>
+                    {{/if}}
+                {{/each}}
+
+                <li><a href="#">&raquo;</a></li>
+            </ul>
+        </script>
+
+    </div>
+
+</body>
+</html>
